@@ -1,5 +1,5 @@
 ---
-id: createAsyncThunk
+id: createAsyncThunk 
 title: createAsyncThunk
 sidebar_label: createAsyncThunk
 hide_title: true
@@ -513,11 +513,13 @@ const fetchUserById = createAsyncThunk(
 
 ```ts no-transpile
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { userAPI } from './userAPI'
+import { User, userAPI } from './userAPI'
 
-const fetchUserById = createAsyncThunk(
+const fetchUserById = createAsyncThunk<User, string, {
+    state: { users: { loading: string, currentRequestId: string } }
+}> (
   'users/fetchByIdStatus',
-  async (userId: string, { getState, requestId }) => {
+  async (userId: string, { get  State, requestId }) => {
     const { currentRequestId, loading } = getState().users
     if (loading !== 'pending' || requestId !== currentRequestId) {
       return
